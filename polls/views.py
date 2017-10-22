@@ -46,11 +46,8 @@ def form_test(request):
 
 class IndexView(generic.ListView):
   template_name = 'index.html'
+  model = Question
   context_object_name = 'questions'
-  #queryset = Question.objects.all() #get_queryset()をオーバーライドするか、querysetを変更するか
-
-  def get_queryset(self):
-    return Question.objects.all()
 
 
 class DetailView(generic.DetailView):
