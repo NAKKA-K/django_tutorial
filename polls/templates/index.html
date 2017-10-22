@@ -1,0 +1,24 @@
+<html>
+<body>
+  <table border="1">
+
+    <tr>
+      <th>質問内容</th>
+      <th>公開日</th>
+      <th>参照</th>
+    </tr>
+
+    {% if questions %}
+      {% for question in questions %}
+        <tr>
+          <td>{{ question.question_text }}</td>
+          <td>{{ question.published_date }}</td>
+          <td><a href="{% url 'polls:detail' question.pk %}">詳細画面へ</a></td>
+        </tr>
+      {% endfor %} 
+    {% endif %}
+
+  </table>
+
+</body>
+</html>
