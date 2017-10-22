@@ -4,9 +4,6 @@ from django.shortcuts import redirect
 from .forms import MyForm
 from .models import Question, Choice
 
-
-from django.views import generic
-
 # Create your views here.
 
 def vote(request, pk):
