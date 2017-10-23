@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
-from .forms import MyForm
+from .forms import MyForm, VoteForm
 from .models import Question, Choice
 from django.views import generic
 
@@ -24,6 +24,14 @@ def vote(request, pk):
     selected_choice.save()
     return redirect('polls:results', pk)
 
+def detail(request, pk):
+  obj = get_object_or_404(Question, pk = pk)
+  form = VoteForm(question = obj)
+  return render(request, 'detail.html', {
+    'form': form,
+    'question':obj,
+  })
+
 
 def results(request, pk):
   obj = get_object_or_404(Question, pk = pk)
@@ -33,14 +41,24 @@ def results(request, pk):
 
 
 def form_test(request):
+  '''
   if request.method == "POST":
     form = MyForm(request.POST)
     if form.is_valid():
       pass
   else:
     form = MyForm()
+  '''
+  form = MyForm(request.POST or None)
+  message = ''
+  if form.is_valid():
+    message = 'データを送信しました'
+  elif request.method != 'GET':
+    message = '不正な値です'
+
   return render(request, 'form.html', {
     'form': form,
+    'message': message,
   })
 
 
