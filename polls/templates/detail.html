@@ -6,7 +6,11 @@
   <!-- 投票用フォーム -->
   <form action = "{% url 'polls:vote' question.id %}" method = "post">
     {% csrf_token %}
-    {{ form }}
+
+    {{ form.choice.label }}:<br>
+    {% for choice in form.choice %}
+      &nbsp;&nbsp;{{ choice }}<br>
+    {% endfor %}
     <input type="submit" value="Vote" />
   </form>
   
