@@ -1,5 +1,6 @@
 <html>
   <body>
+    {% if message %}{{ message }}{% endif %}<br>
     <form action="" method="POST">
       {% csrf_token %}
       {{ form.as_p }}
