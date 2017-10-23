@@ -41,14 +41,6 @@ def results(request, pk):
 
 
 def form_test(request):
-  '''
-  if request.method == "POST":
-    form = MyForm(request.POST)
-    if form.is_valid():
-      pass
-  else:
-    form = MyForm()
-  '''
   form = MyForm(request.POST or None)
   message = ''
   if form.is_valid():
