@@ -7,9 +7,9 @@ from django.core.urlresolvers import reverse_lazy
 # Create your views here.
 
 class Detail(generic.detail.SingleObjectMixin, generic.FormView):
-  model = Question
-  form_class = VoteForm
-  context_object_name = 'question'
+  model = Question # モデルを取得するにはSingleObjectMixinが必要？
+  form_class = VoteForm # 形式等、元となるFOrmを指定
+  context_object_name = 'question' # templateから呼び出す名前
   template_name = 'detail.html'
 
   def get(self, request, *args, **kwargs):
@@ -22,15 +22,15 @@ class Detail(generic.detail.SingleObjectMixin, generic.FormView):
 
   def get_form_kwargs(self):
     kwargs = super().get_form_kwargs()
-    kwargs['question'] = self.object
+    kwargs['question'] = self.object # get.postで代入したQuestionを追加
     return kwargs
 
   def form_valid(self, form):
-    form.vote()
+    form.vote() # 成功時に投票する
     return super().form_valid(form)
 
   def get_success_url(self):
-    return resolve_url('polls:results', self.kwargs['pk'])
+    return resolve_url('polls:results', self.kwargs['pk']) # urlに含まれていたpkをresultsに送る
 
 detail = Detail.as_view()
 
