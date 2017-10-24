@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from .forms import MyForm, VoteForm
 from .models import Question, Choice
 from django.views import generic
@@ -6,17 +6,33 @@ from django.core.urlresolvers import reverse_lazy
 
 # Create your views here.
 
-def detail(request, pk):
-  obj = get_object_or_404(Question, pk = pk)
-  form = VoteForm(question = obj, data = request.POST or None)
-  if form.is_valid():
-    form.vote()
-    return redirect('polls:results', pk)
+class Detail(generic.detail.SingleObjectMixin, generic.FormView):
+  model = Question
+  form_class = VoteForm
+  context_object_name = 'question'
+  template_name = 'detail.html'
 
-  return render(request, 'detail.html', {
-    'form': form,
-    'question':obj,
-  })
+  def get(self, request, *args, **kwargs):
+    self.object = self.get_object()
+    return super().get(request, *args, **kwargs)
+
+  def post(self, request, *args, **kwargs):
+    self.object = self.get_object()
+    return super().post(request, *args, **kwargs)
+
+  def get_form_kwargs(self):
+    kwargs = super().get_form_kwargs()
+    kwargs['question'] = self.object
+    return kwargs
+
+  def form_valid(self, form):
+    form.vote()
+    return super().form_valid(form)
+
+  def get_success_url(self):
+    return resolve_url('polls:results', self.kwargs['pk'])
+
+detail = Detail.as_view()
 
 
 def results(request, pk):
