@@ -4,7 +4,7 @@
   <h2>Question: {{ question.question_text }}</h2>
 
   <!-- 投票用フォーム -->
-  <form action = "{% url 'polls:vote' question.id %}" method = "post">
+  <form action = "" method = "post">
     {% csrf_token %}
 
     {{ form.choice.label }}:<br>
