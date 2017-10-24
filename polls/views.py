@@ -1,9 +1,9 @@
-from django.shortcuts import render
-from django.shortcuts import get_object_or_404
-from django.shortcuts import redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from .forms import MyForm, VoteForm
 from .models import Question, Choice
 from django.views import generic
+from django.views.generic import FormView
+from django.core.urlresolvers import reverse_lazy
 
 # Create your views here.
 
@@ -27,18 +27,12 @@ def results(request, pk):
   })
 
 
-def form_test(request):
-  form = MyForm(request.POST or None)
-  message = ''
-  if form.is_valid():
-    message = 'データを送信しました'
-  elif request.method != 'GET':
-    message = '不正な値です'
+class FormTest(FormView):
+  form_class =MyForm
+  template_name = 'form.html'
+  success_url = reverse_lazy('polls:index')
 
-  return render(request, 'form.html', {
-    'form': form,
-    'message': message,
-  })
+form_test = FormTest.as_view() # FormTestクラスからviewを作成
 
 
 class IndexView(generic.ListView):
