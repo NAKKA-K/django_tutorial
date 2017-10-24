@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .forms import MyForm, VoteForm
 from .models import Question, Choice
 from django.views import generic
-from django.views.generic import FormView
 from django.core.urlresolvers import reverse_lazy
 
 # Create your views here.
@@ -27,7 +26,7 @@ def results(request, pk):
   })
 
 
-class FormTest(FormView):
+class FormTest(generic.FormView):
   form_class =MyForm
   template_name = 'form.html'
   success_url = reverse_lazy('polls:index')
