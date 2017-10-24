@@ -9,10 +9,10 @@ from django.views import generic
 
 def detail(request, pk):
   obj = get_object_or_404(Question, pk = pk)
-  form = VoteForm(question = obj, request.POST or None)
-  if form.is_valid:
+  form = VoteForm(question = obj, data = request.POST or None)
+  if form.is_valid():
     form.vote()
-    return redirect('result.html', pk)
+    return redirect('polls:results', pk)
 
   return render(request, 'detail.html', {
     'form': form,

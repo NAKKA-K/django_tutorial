@@ -21,6 +21,6 @@ class VoteForm(forms.Form):
 
   def vote(self):
     assert(self.is_valid())
-    choice = self.cleaned_date['choice']
-    choice.vote += 1
+    choice = self.cleaned_data['choice']
+    choice.votes += 1
     choice.save()
