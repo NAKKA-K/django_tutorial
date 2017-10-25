@@ -10,7 +10,7 @@ class Detail(generic.detail.SingleObjectMixin, generic.FormView):
   model = Question # モデルを取得するにはSingleObjectMixinが必要？
   form_class = VoteForm # 形式等、元となるFOrmを指定
   context_object_name = 'question' # templateから呼び出す名前
-  template_name = 'detail.html'
+  template_name = 'polls/detail.html'
 
   def get(self, request, *args, **kwargs):
     self.object = self.get_object()
@@ -36,29 +36,29 @@ class Detail(generic.detail.SingleObjectMixin, generic.FormView):
 
 def results(request, pk):
   obj = get_object_or_404(Question, pk = pk)
-  return render(request, 'results.html', {
+  return render(request, 'polls/results.html', {
     'question': obj,
   })
 
 
 class FormTest(generic.FormView):
   form_class =MyForm
-  template_name = 'form.html'
+  template_name = 'polls/form.html'
   success_url = reverse_lazy('polls:index')
 
 
 
 class IndexView(generic.ListView):
-  template_name = 'index.html'
+  template_name = 'polls/index.html'
   model = Question
   context_object_name = 'questions'
 
 
 class DetailView(generic.DetailView):
-  template_name = 'detail.html'
+  template_name = 'polls/detail.html'
   model = Question
 
 
 class ResultsView(generic.DetailView):
-  template_name = 'results.html'
+  template_name = 'polls/results.html'
   model = Question
