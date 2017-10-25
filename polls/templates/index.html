@@ -1,12 +1,6 @@
 {% extends "base.html" %}
-{% load staticfiles %}
-<html>
 
-<head>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}"/>
-</head>
-
-<body>
+{% block contents %}
   <table border="1" class="table table-striped">
 
     <tr>
@@ -26,6 +20,5 @@
     {% endif %}
 
   </table>
-
-</body>
-</html>
+<!-- endblockに引数は必要ないが、どのblockを閉じたのかわからなくなるため、開くときと対の引数をつける -->
+{% endblock contents %}
