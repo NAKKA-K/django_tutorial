@@ -32,7 +32,6 @@ class Detail(generic.detail.SingleObjectMixin, generic.FormView):
   def get_success_url(self):
     return resolve_url('polls:results', self.kwargs['pk']) # urlに含まれていたpkをresultsに送る
 
-detail = Detail.as_view()
 
 
 def results(request, pk):
@@ -47,7 +46,6 @@ class FormTest(generic.FormView):
   template_name = 'form.html'
   success_url = reverse_lazy('polls:index')
 
-form_test = FormTest.as_view() # FormTestクラスからviewを作成
 
 
 class IndexView(generic.ListView):
