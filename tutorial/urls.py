@@ -16,7 +16,10 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from polls.views import IndexView
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'', include('polls.urls', namespace = "polls")),
+    url(r'polls/', include('polls.urls', namespace = "polls")),
+    url(r'^$', IndexView.as_view(), name = "index")
 ]

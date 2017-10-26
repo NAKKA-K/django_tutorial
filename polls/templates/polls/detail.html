@@ -1,5 +1,6 @@
-<html>
-<body>
+{% extends "polls_base.html" %}
+
+{% block contents %}
   <a href="{% url 'polls:index' %}">一覧画面へ</a>
   <h2>Question: {{ question.question_text }}</h2>
 
@@ -14,5 +15,4 @@
     <input type="submit" value="Vote" />
   </form>
   
-</body>
-</html>
+{% endblock contents %}
