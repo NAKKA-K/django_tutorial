@@ -7,11 +7,7 @@
   <!-- 投票用フォーム -->
   <form action = "" method = "post">
     {% csrf_token %}
-
-    {{ form.choice.label }}:<br>
-    {% for choice in form.choice %}
-      &nbsp;&nbsp;{{ choice }}<br>
-    {% endfor %}
+    {% bootstrap_form form %}
     <input type="submit" value="Vote" />
   </form>
   
