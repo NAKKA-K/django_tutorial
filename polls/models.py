@@ -14,12 +14,14 @@ class Question(models.Model):
   question_text = models.CharField(max_length=200)
   published_date = models.DateTimeField('date published')
 
+  def was_published_recently(self):
+    return timezone.now() >= self.published_date >= timezone.now() - datetime.timedelta(days = 1)
+
   def what_days_ago(self):
     days_ago = (timezone.now() - self.published_date) / datetime.timedelta(days=1)
     return str(int(days_ago)) + '日前'
 
-  what_days_ago.admin_order_field = 'published_date'
-
+  what_days_ago.admin_order_field = 'published_date' # 並び替えの対象カラム
 
   def __str__(self):
     return self.question_text
