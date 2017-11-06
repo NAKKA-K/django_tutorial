@@ -3,6 +3,7 @@ from .forms import MyForm, VoteForm
 from .models import Question, Choice
 from django.views import generic
 from django.core.urlresolvers import reverse_lazy
+from django.contrib import messages
 
 # Create your views here.
 
@@ -27,6 +28,8 @@ class Detail(generic.detail.SingleObjectMixin, generic.FormView):
 
   def form_valid(self, form):
     form.vote() # 成功時に投票する
+    choice = form.cleaned_data['choice']
+    messages.success(self.request, '"%s"に投票しました' % choice)
     return super().form_valid(form)
 
   def get_success_url(self):

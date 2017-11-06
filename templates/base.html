@@ -44,6 +44,9 @@
     </nav>
 
     <div class="container">
+      {% if messages %}
+        {% bootstrap_messages messages %}
+      {% endif %}
       {% block contents %}{% endblock %}
     </div><!-- /.container -->
 
