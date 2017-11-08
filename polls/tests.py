@@ -20,6 +20,14 @@ class PollTest(TestCase):
         obj = Question(published_date = timezone.now() + timedelta(minutes = 1))
         self.assertFalse(obj.was_published_recently(), '1分後に公開')
 
+
+def dummy_api_func():
+    return 'dummy api response'
+
+def api_func():
+    return 'api response'
+
+
 class ViewTest(TestCase):
     def test_index(self):
         response = self.client.get(resolve_url('polls:index')) # 指定URLへアクセス
@@ -34,3 +42,15 @@ class ViewTest(TestCase):
         response = self.client.get(resolve_url('polls:index')) # 新しいデータを登録したため、ページを更新後テスト
         self.assertEqual(1, response.context['questions'].count())
         self.assertEqual('aaa', response.context['questions'].first().question_text)
+
+    def test_mock_api(self):
+        ret = api_func()
+        print('ret:', ret)
+        with mock.patch('polls.tests.api_func', dummy_api_func):
+            ret = api_func() # この呼び出しがdummyになる
+            print('mocked_ret:', ret)
+
+    @mock.patch('polls.tests.api_func', dummy_api_func)
+    def test_mocked_api_with_decorator(self):
+        ret = api_func()
+        print('decorator:', ret)
